@@ -1,35 +1,51 @@
-import {Header, Footer} from "@/layouts";
-import {Home} from "@/pages";
+// import {Header, Footer} from "@/layouts";
 import "./Layout.css";
-import { createBrowserRouter } from "react-router-dom";
+import {Home} from "@/pages";
+import { createBrowserRouter , RouterProvider } from "react-router-dom";
 import About from "../pages/About/About";
-import { RouterProvider } from "react-router-dom";
 import NotFound from "../pages/NotFound/NotFound";
+import Root from "./Root/Root";
 
 
 const router = createBrowserRouter([
+  
   {
     path: "/",
-    element: <Home />
-    
+    element: <Root />,
+    children: [
+      {
+      path: "/",
+      element: <Home />,
+      errorElement: <NotFound />
+    },
+    {
+      path: "/about",
+      element: <About />
+    },
+      
+    ],
+    errorElement: <NotFound />  
   },
+
   {
-    path: "/about",
-    element: <About />
-  },
-  {
-  path: "/erreur404",
-  element:<NotFound/>
-}
+    path: "/*",
+    element: <NotFound />,
+    errorElement: <NotFound/>
+
+  }
+
 ])
+
+
 const Layout = () => {
     return(
     <>
-      <Header/>
+      {/* <Header /> */}
       <RouterProvider router={router}/>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   );
 }
 
 export default Layout;
+
